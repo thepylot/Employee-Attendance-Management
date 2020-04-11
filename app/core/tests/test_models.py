@@ -1,5 +1,5 @@
 from django.test import TestCase
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 
 class ModelTests(TestCase):
 
@@ -36,3 +36,17 @@ class ModelTests(TestCase):
         )
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+        
+    def test_create_user_with_extrafields(self):
+            """Test creating a new user with extra fields"""
+            email='test@coderasha.com'
+            password='testpass123'
+            name='Test User'
+            user = get_user_model().objects.create_user(
+                email=email,
+                password=password,
+                name=name,
+            )
+            self.assertEqual(user.email, email)
+            self.assertEqual(user.name, name)
+        

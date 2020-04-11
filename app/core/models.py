@@ -24,10 +24,17 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports using email instead username"""
     email = models.EmailField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+class ProfilePic(models.Model):
+    """User profile model"""
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='profilepics/', blank=True)
+   
+    

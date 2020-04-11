@@ -1,5 +1,10 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model, authenticate
+from django.core.exceptions import ValidationError
+from core import models
+
+def sample_user(email='test@reversepython.com', password='testpass'):
+    return get_user_model().objects.create_user(email, password)
 
 class ModelTests(TestCase):
 
@@ -49,4 +54,31 @@ class ModelTests(TestCase):
             )
             self.assertEqual(user.email, email)
             self.assertEqual(user.name, name)
-        
+    
+    def test_create_leave_successfull(self):
+        """Test creating a new leave is successful with string representation"""
+        leave = models.Leave.objects.create(
+            user=sample_user(),
+            leave_type='Holiday',
+            leave_start_date='2020-04-20',
+            leave_end_date='2020-04-21',
+            leave_start_time='12:30',
+            leave_end_time='12:30',
+            leave_reason='Test reason',
+        )
+
+        self.assertEqual(str(leave), leave.leave_type)
+    
+    def test_date_format_invalid(self):
+        """Test creating a new leave with wrong date format"""
+        with self.assertRaises(ValidationError):
+            leave = models.Leave.objects.create(
+                user=sample_user(),
+                leave_type='Holiday',
+                leave_start_date='2020/04/20',
+                leave_end_date='2020/04/21',
+                leave_start_time='12:30',
+                leave_end_time='12:30',
+                leave_reason='Test reason',
+            )
+

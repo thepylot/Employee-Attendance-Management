@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div id="wrapper">
+    {% include 'leaves/sidebar.html' %}
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+            {% include 'leaves/topbar.html'%}
+        <div class="content">
+            <div class="animated fadeIn">
+               <div class="row">
+                    <div class="col-lg-7">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title box-title color-black">Leave Form</h4>
+                                <div class="card-content">
+                                        <form  method="POST" id="attend-form">
+                                            {% csrf_token %}
+                                                <div class="form-row ">
+                                                  <div class="col-md-5ths col-xs-6 my-3">
+                                                    <label class="color-black" for="leave_type">Type of Leave</label>
+                                                    <input type="text" name="leave_type" id="leave_type" class="form-control" placeholder="Leave Type">
+                                                  </div>
+
+                                                  <div class='col-md-5ths col-xs-6 my-3'>
+                                                        <label class="color-black" for="datestart">Leave Start Date</label>
+                                                        <div class=" input-group date" id='datetimepicker10'>
+                                                        <input type='text' name="leave_start_date" id="leave_start_date" class="form-control" placeholder="Date Start" />
+                                                        <span class="input-group-addon">
+                                                            <span  class="far fa-calendar-alt form-icon"></span>
+                                                        </span>
+                                                    </div>
+                                                    </div>
+
+                                                  <div class='col-md-5ths col-xs-6 my-3'>
+                                                        <label class="color-black" for="dateend">Leave End Date</label>
+                                                        <div class=" input-group date" id='datetimepicker10'>
+                                                        <input type='text' name="leave_end_date" id="leave_end_date" class="form-control" placeholder="Date End" />
+                                                        <span class="input-group-addon">
+                                                            <span  class="far fa-calendar-alt form-icon"></span>
+                                                        </span>
+                                                        </div>
+                                                    </div>
+                                                 
+                                                        <div class='col-md-5ths col-xs-6 my-3'>
+                                                                <label class="color-black" for="timestart">Leave Time Start</label>
+                                                            <div class=" input-group date" id='datetimepicker3'>
+                                                            <input type='text' name="leave_start_time" id="leave_start_time" class="form-control" placeholder="Time Start" />
+                                                            <span class="input-group-addon">
+                                                                <span  class="far fa-clock form-icon"></span>
+                                                            </span>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <div class='col-md-5ths col-xs-6 my-3'>
+                                                                <label class="color-black" for="timeend">Leave Time End</label>
+                                                                <div class=" input-group date" id='datetimepicker3'>
+                                                                <input type='text' name="leave_end_time" id="leave_end_time" class="form-control" placeholder="Time End" />
+                                                                <span class="input-group-addon">
+                                                                    <span  class="far fa-clock form-icon"></span>
+                                                                </span>
+                                                            </div>
+                                                            </div>
+                                                </div>
+
+                                                <label class="color-black" for="reason">Reason</label>
+                                                <div class="form-row">
+                                                    <div class="col-sm-10 my-3">
+                                                        <input id="leave_reason" name="leave_reason" type="text" class="form-control" placeholder="Reason">
+                                                    </div>
+                                                    <div class="col-sm-2 my-3">
+                                                        <button type="submit" id="submit" class="send-button"></button>
+                                                    </div>
+                                                </div>
+                                                <div id="form-error"></div>
+                                              </form>
+                                              
+                                </div>
+                            </div> <!-- /.card-body -->
+                        </div><!-- /.card -->
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="card percentage">
+                            <div class="card-body shadow-percentage">
+                                <div class="row">
+                                    <div class="col-md-6 my-2">
+                                        <h2 class="typo-h2">Leave Days</h2>
+                                        <h1 class="typo-h4"><span class="typo-h1">
+                                          {% if requested_leave_days %}
+                                          {{ requested_leave_days }}
+                                          {% else %}0
+                                          {% endif %}</span><span class="typo-span">Day</span></h1>  
+                                        <p class="typo-p">Available leave limit is 
+                                          {% if annual_leave_limit %}
+                                            {% for limit in annual_leave_limit %}
+                                              {{limit.annual_leave_limit}}
+                                            {% endfor %} 
+                                          {% else %} 0 
+                                          {% endif %} days</p>
+                                    </div>
+
+                                    <div class="svg-item col-md-6">
+                                            <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+                                              <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="transparent"></circle>
+                                              <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+                                              <circle class="donut-segment" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="{% if requested_leave_days %} {{percentage_stroke_1}} {{percentage_stroke_2}} {% else %} 0 100 {% endif %} " stroke-dashoffset="25"></circle>
+                                              <g class="donut-text">
+                                          
+                                                <text y="50%" transform="translate(0, 2)">
+                                                  <tspan x="50%" text-anchor="middle" class="donut-percent">{% if percentage_num  %}{{percentage_num}}% {%else%} 0% {% endif %}</tspan>   
+                                                </text>
+                                              </g>
+                                            </svg>
+                                          </div>
+                                </div>          
+                               
+                                </div>
+                            </div> <!-- /.card-body -->
+                        </div><!-- /.card -->
+                    </div>
+                </div>
+                <div class="orders">
+                        <div class="col-xl-12">
+                                <h4 class="box-title my-4 color-black">Attendance List</h4>
+                                    <div class="table-stats order-table ov-h">
+                                        <table class="table seperate">
+                                            <thead >
+                                                <tr>
+                                                    <th class="color-black">Leave Type</th>
+                                                    <th class="color-black">Date</th>
+                                                    <th class="color-black">Time</th>
+                                                    <th class="color-black">Status</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr id="new-attend" class="card-row">
+                                                       
+                                                  </tr>
+                                                {% for leave in leaves %}
+                                                <tr class="card-row">
+                                                        <td>  <span class="name">{{leave.leave_type}}</span> </td>
+                                                        <td> <span class="product">{{leave.leave_start_date|date:"Y-m-d"}} - {{leave.leave_end_date|date:"Y-m-d"}}</span> </td>
+                                                        <td><span>{{leave.leave_start_time|time:"H:i A"}} - {{leave.leave_end_time|time:"H:i A"}}</span></td>
+                                                        <td>
+                                                            <span class="badge badge-waiting">{{leave.status}}</span>
+                                                        </td>
+                                                        <td><a class="btn btn-info btn-circle btn-sm" href="#"><i class="fas fa-archive"></i></a>
+                                                       <a class="btn btn-danger ml-2 btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" href="#"><i class="fas fa-trash"></i></a></td>
+                                                    </tr>
+                                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                      <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Do you want to delete?</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true">×</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body">You can archive leaves instead.</div>
+                                                          <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <a class="btn btn-info" href="#">Archive</a>
+                                                            <a class="btn btn-danger" href="#">Delete</a>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        {% if not leaves %}
+                                        <div class="alert fade show text-center" role="alert">
+                                            No any leaves yet.
+                                          </div>
+                                        {% endif %}
+                                        {% if messages %}
+                                        <ul class="messages">
+                                            {% for message in messages %}
+                                            <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                                                {{message}}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                            
+                                            {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div> 
+                        </div>  <!-- /.col-lg-8 -->
+
+                    </div>
+                    {% if attendances.has_other_pages %}
+            <ul class="pagination">
+              {% for i in attendances.paginator.page_range %}
+                {% if attendances.number == i %}
+                  <li class="active page-link active-pg-btn"><span>{{ i }} <span class="sr-only" >(current)</span></span></li>
+                {% else %}
+                  <li><a class="btn page-button" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+              {% endfor %}
+             
+            </ul>
+          {% endif %}
+                </div>
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Kriston <sup>512</sup> 2020 by coderasha</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+{% endblock %}

@@ -82,3 +82,11 @@ class ModelTests(TestCase):
                 leave_reason='Test reason',
             )
 
+    def test_profile_picture_created_succesful(self):
+        """Testing profile picture created succesfull when user created"""
+        user = sample_user()
+        profilepic = models.ProfilePic.objects.filter(
+            user=user
+        ).exists()
+        self.assertTrue(profilepic)
+

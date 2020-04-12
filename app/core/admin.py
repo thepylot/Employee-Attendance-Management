@@ -33,3 +33,4 @@ class AnnualLimitAdmin(admin.ModelAdmin):
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.Leave)
 admin.site.register(models.AnnualLimit, AnnualLimitAdmin)
+admin.site.register(models.ProfilePic)

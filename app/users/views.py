@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from . import forms
@@ -25,7 +25,7 @@ def sign_in_view(request):
             password = form.cleaned_data.get('password')
             user = authenticate(email=email, password=password)
             login(request, user)
-            messages.success(request,'Login Successful!')
+            return redirect('base:leaves')
         else:
             messages.error(request,'Email or password is not correct.')
     else:
@@ -34,3 +34,6 @@ def sign_in_view(request):
 
 
 
+def sign_out_view(request):
+    logout(request)
+    return redirect('auth:signin')   

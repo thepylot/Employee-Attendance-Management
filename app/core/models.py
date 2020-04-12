@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db.models.signals import post_save
+from django.db.models import Sum
+
 
 class UserManager(BaseUserManager):
 
@@ -38,6 +40,9 @@ class ProfilePic(models.Model):
     """User profile model"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='profilepics/', blank=True)
+
+    def __str__(self):
+        return self.user.name
    
     def create_user_profile_pic(sender, **kwargs):
         if kwargs['created']:

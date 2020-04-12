@@ -85,11 +85,7 @@
                                 <div class="row">
                                     <div class="col-md-6 my-2">
                                         <h2 class="typo-h2">Leave Days</h2>
-                                        <h1 class="typo-h4"><span class="typo-h1">
-                                          {% if requested_leave_days %}
-                                          {{ requested_leave_days }}
-                                          {% else %}0
-                                          {% endif %}</span><span class="typo-span">Day</span></h1>  
+                                        <h1 class="typo-h4"><span class="typo-h1">{% if requested_leave_days %}{{ requested_leave_days }}{% else %}0{% endif %}</span><span class="typo-span">Day</span></h1>  
                                         <p class="typo-p">Available leave limit is 
                                           {% if annual_leave_limit %}
                                             {% for limit in annual_leave_limit %}
@@ -157,11 +153,9 @@
                                                               <span aria-hidden="true">×</span>
                                                             </button>
                                                           </div>
-                                                          <div class="modal-body">You can archive leaves instead.</div>
                                                           <div class="modal-footer">
                                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                            <a class="btn btn-info" href="#">Archive</a>
-                                                            <a class="btn btn-danger" href="#">Delete</a>
+                                                            <a class="btn btn-danger" href="{% url 'base:delete_leave' leave.id %}">Delete</a>
                                                           </div>
                                                         </div>
                                                       </div>

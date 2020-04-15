@@ -18,6 +18,4 @@ COPY ./app /app
 # RUN mkdir -p /vol/web/static
 
 RUN adduser -D coderasha
-# RUN chown -R user:user /vol/
-# RUN chmod -R 755 /vol/web
 USER coderasha

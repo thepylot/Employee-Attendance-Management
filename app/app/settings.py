@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import ast
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -21,12 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'r(h%1&(l^f1=a@!qolg*5it58r2l53zw%tx#e(^%up+&^)((r*'
+SECRET_KEY = os.getenv('MYSITE_SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = ast.literal_eval(os.getenv('DEBUG', 'True'))
+ALLOWED_HOSTS = ['0.0.0.0',]
 
 
 # Application definition

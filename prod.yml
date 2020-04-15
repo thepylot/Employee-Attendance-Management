@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    restart: always
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py wait_for_db && python3 manage.py collectstatic --no-input && gunicorn app.wsgi -b 0.0.0.0:8000"
+    volumes:
+      - ./app:/app
+    environment:
+      - DB_HOST=db
+      - DB_NAME=app
+      - DB_USER=postgres
+      - DB_PASS=supersecretpassword
+    env_file:
+      - django.env
+    expose:
+      - "8000"
+    depends_on:
+      - db
+  nginx:
+    image: nginx
+    restart: always
+    ports:
+      - "80:8000"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./static_cdn:/static
+    depends_on:
+      - app
+  db:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecretpassword
+    ports:
+      - "5432:5432"

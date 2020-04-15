@@ -6,12 +6,14 @@ services:
       context: .
     ports:
       - "8000:8000"
+    env_file:
+      - django.env
     volumes:
       - ./app:/app
     command: >
       sh -c "python3 manage.py migrate &&
              python3 manage.py wait_for_db &&
-             python3 manage.py runserver 0.0.0.0:8000"
+             gunicorn app.wsgi -b 0.0.0.0:8000"
              
     environment:
       - DB_HOST=db
@@ -29,5 +31,21 @@ services:
       - POSTGRES_PASSWORD=supersecretpassword
     ports:
       - "5432:5432"
-
-      
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+      - pgconf:/etc/postgresql
+      - pglog:/var/log/postgresql
+  nginx:
+    build: ./nginx
+    ports:
+      - "1337:80"
+    depends_on:
+    - app
+  
+volumes:
+  pgdata:
+    driver: local
+  pgconf:
+    driver: local
+  pglog: 
+    driver: local

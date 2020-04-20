@@ -33,5 +33,12 @@ services:
       - "5432:5432"
     volumes: 
       - pgdata:/var/lib/postgresql/data
+  nginx:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - "80:80"
 volumes:
   pgdata:

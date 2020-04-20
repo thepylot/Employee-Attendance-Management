@@ -36,6 +36,8 @@ def create_leave(request):
         for day in annual_leave_limit:
             if day['annual_leave_limit'] < requested_leave_days + diff_date:
                 messages.warning(request, 'Your leave request is greater than limit!')
+            elif d2 < datetime.now().date():
+                messages.warning(request, 'Request can not be in past!')
             else:
                 models.Leave.objects.create(
                     user=request.user,
@@ -99,3 +101,7 @@ def delete_leave(request, id):
     leave = get_object_or_404(models.Leave, id=id)
     leave.delete()
     return redirect ('base:leaves')
+
+
+def guide_view(request):
+    return render(request, 'guide.html')

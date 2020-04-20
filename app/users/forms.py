@@ -11,6 +11,11 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('email', 'name', 'password1', 'password2', )
 
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password1')
+        return super(SignUpForm, self).clean() 
+        
 class SignInForm (forms.Form):
     email = forms.EmailField(max_length=100, label='Email')
     password = forms.CharField(max_length=100, label='Password', widget = forms.PasswordInput)

@@ -10,6 +10,10 @@ def sign_up_view(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password1')
+            login(request, authenticate(email=email, password=password))
+            return redirect('base:leaves')
         else:
             messages.warning(request, 'Please provide valid information.')
     else:
@@ -23,11 +27,13 @@ def sign_in_view(request):
         if form.is_valid():
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
-            user = authenticate(email=email, password=password)
-            login(request, user)
-            return redirect('base:leaves')
+            try:
+                login(request, authenticate(email=email, password=password))
+                return redirect('base:leaves')
+            except AttributeError:
+                messages.error(request, 'User does not exist.')
         else:
-            messages.error(request,'Email or password is not correct.')
+            messages.error(request,'Please provide valid information.')
     else:
         form = forms.SignInForm()
     return render(request, 'users/signin.html', {'form':form})

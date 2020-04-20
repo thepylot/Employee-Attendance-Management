@@ -7,7 +7,15 @@
     <li class="nav-item dropdown no-arrow">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.name}}</span>
-        <img class="img-profile rounded-circle" src="{% if profilepic.image %} {{profilepic.image.url}} {% endif %}">
+        {% if profilepic.image %} 
+        <img class="img-profile rounded-circle" src="{{profilepic.image.url}}">
+        {% else %}
+        <div class="img-profile rounded-circle" style="background-color: #132f81;">
+          <p style="text-align: center; color: white; font-size: 14px; margin:3px; font-weight: bold;">{{user.name|slice:'1'}}</p>
+        </div>
+        {% endif %}
+
+        
       </a>
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
         <a class="dropdown-item" href="#">

@@ -33,11 +33,13 @@
                 <button type="submit" class="btn btn-primary btn-user btn-block">
                   Sign Up
                 </button>
-                <hr>
               </form>
+              <hr>
                 {% for field in form %}
                 {% for error in field.errors %}
-                  <p style="color: tomato">{{ error }}</p>
+                <div class="alert alert-danger">
+                  {{ error }}
+              </div>
                 {% endfor %}            
                 {% endfor %}
               <hr>

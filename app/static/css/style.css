@@ -2495,7 +2495,79 @@ footer.site-footer {
 }
 
 
+/* ----------- Non-Retina Screens ----------- */
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+    .send-button{
+      width: 90px;
+  
+    }
+    label{
+      font-size: 13px;
+    }
+    .typo-p{
+      font-size:17px
+    }
+    .typo-h2{
+      font-size: 32px;
+    }
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 
+     font-size: 13px;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+
+      font-size: 13px;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+
+      font-size: 13px;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+
+      font-size: 13px;
+    }
+}
+
+/* ----------- Retina Screens ----------- */
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (min-resolution: 192dpi) { 
+    .send-button{
+      width: 90px;
+  
+    }
+    label{
+      font-size: 13px;
+    }
+    .typo-p{
+      font-size:17px;
+    }
+    .typo-h2{
+      font-size: 32px;
+    }
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+
+      font-size: 13px;
+     }
+     ::-moz-placeholder { /* Firefox 19+ */
+ 
+       font-size: 13px;
+     }
+     :-ms-input-placeholder { /* IE 10+ */
+ 
+       font-size: 13px;
+     }
+     :-moz-placeholder { /* Firefox 18- */
+ 
+       font-size: 13px;
+     }
+    
+}
 
 /* 
   ##Device = Laptops, Desktops
@@ -2508,6 +2580,32 @@ footer.site-footer {
     width: 90px;
 
   }
+
+  label{
+    font-size: 13px;
+  }
+  .typo-p{
+    font-size:17px;
+  }
+  .typo-h2{
+    font-size: 32px;
+  }
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+
+    font-size: 13px;
+   }
+   ::-moz-placeholder { /* Firefox 19+ */
+
+     font-size: 13px;
+   }
+   :-ms-input-placeholder { /* IE 10+ */
+
+     font-size: 13px;
+   }
+   :-moz-placeholder { /* Firefox 18- */
+
+     font-size: 13px;
+   }
 
 }
 
@@ -2523,6 +2621,32 @@ footer.site-footer {
     width: 90px;
 
   }
+  label{
+    font-size: 13px;
+  }
+  .typo-p{
+    font-size:17px;
+  }
+  .typo-h2{
+    font-size: 32px;
+  }
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+
+    font-size: 13px;
+   }
+   ::-moz-placeholder { /* Firefox 19+ */
+
+     font-size: 13px;
+   }
+   :-ms-input-placeholder { /* IE 10+ */
+
+     font-size: 13px;
+   }
+   :-moz-placeholder { /* Firefox 18- */
+
+     font-size: 13px;
+   }
+  
   
 }
 
@@ -2532,11 +2656,27 @@ footer.site-footer {
 */
 
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .send-button{
-    width: 90px;
+  .send-button{width: 90px;}
+  label{font-size: 13px;}
+  .typo-p{font-size:17px;}
+  .typo-h2{font-size: 32px;}
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 
-  }
+    font-size: 13px;
+   }
+   ::-moz-placeholder { /* Firefox 19+ */
 
+     font-size: 13px;
+   }
+   :-ms-input-placeholder { /* IE 10+ */
+
+     font-size: 13px;
+   }
+   :-moz-placeholder { /* Firefox 18- */
+
+     font-size: 13px;
+   }
+  
   
 }
 
@@ -2551,19 +2691,31 @@ footer.site-footer {
     width: 90px;
 
   }
-  
-}
-
-/* 
-  ##Device = Most of the Smartphones Mobiles (Portrait)
-  ##Screen = B/w 320px to 479px
-*/
-
-@media (min-width: 320px) and (max-width: 480px) {
-  
-  .send-button{
-    width: 90px;
-
+  label{
+    font-size: 13px;
   }
+  .typo-p{
+    font-size:17px;
+  }
+  .typo-h2{
+    font-size: 32px;
   
 }
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+
+  font-size: 13px;
+ }
+ ::-moz-placeholder { /* Firefox 19+ */
+
+   font-size: 13px;
+ }
+ :-ms-input-placeholder { /* IE 10+ */
+
+   font-size: 13px;
+ }
+ :-moz-placeholder { /* Firefox 18- */
+
+   font-size: 13px;
+ }
+}
+

@@ -50,6 +50,16 @@ class ProfilePic(models.Model):
            
     post_save.connect(create_user_profile_pic, sender=User)   
 
+    def create_annual_leave_limit(sender, **kwargs):
+        if kwargs['created']:
+            AnnualLimit.objects.create(
+                user=kwargs['instance'],
+                annual_leave_limit=25
+                )
+           
+    post_save.connect(create_annual_leave_limit, sender=User)   
+
+
 class BaseLeaveModel(models.Model):
 
     class Meta:
@@ -92,3 +102,4 @@ class AnnualLimit(models.Model):
 
     def __str__(self):
         return self.user.name
+    

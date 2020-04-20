@@ -86,7 +86,7 @@
                                     <div class="col-md-6 my-2">
                                         <h2 class="typo-h2">Leave Days</h2>
                                         <h1 class="typo-h4"><span class="typo-h1">{% if requested_leave_days %}{{ requested_leave_days }}{% else %}0{% endif %}</span><span class="typo-span">Day</span></h1>  
-                                        <p class="typo-p">Available leave limit is 
+                                        <p class="typo-p">Available limit is 
                                           {% if annual_leave_limit %}
                                             {% for limit in annual_leave_limit %}
                                               {{limit.annual_leave_limit}}

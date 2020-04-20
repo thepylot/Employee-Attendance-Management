@@ -18,9 +18,12 @@ from django.urls import path, include
 from django.conf import settings 
 from django.conf.urls.static import static 
 
+from leaves import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include(('users.urls', 'users'), namespace='auth')),
     path('base/', include(('leaves.urls', 'leaves'), namespace='base')),
+    path('', views.guide_view, name='guide')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

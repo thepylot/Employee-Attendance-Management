@@ -8,8 +8,6 @@ from django.urls import reverse
 
 from core import models
 
-# SIGN_IN_URL = reverse('auth:signin')
-
 @login_required(login_url='/auth/signin')
 def create_leave(request):
 
@@ -53,6 +51,32 @@ def create_leave(request):
                 ) 
         return HttpResponse('')
 
+@login_required(login_url='/auth/signin')
+def archive_leave(request, id):
+    leave = get_object_or_404(models.Leave, id=id)
+    if not leave.status == 'waiting':
+        leave_archive = models.ArchivedLeave()
+        for field in leave._meta.fields:
+            setattr(leave_archive, field.name, getattr(leave, field.name))
+        leave_archive.pk = None
+        leave_archive.save()
+        return redirect ('base:leaves')
+    else:
+        messages.warning(request, 'You can\'t archive leaves until the decision.')
+        return redirect ('base:leaves')
+
+@login_required(login_url='/auth/signin')
+def delete_leave(request, id):
+    leave = get_object_or_404(models.Leave, id=id)
+    leave.delete()
+    return redirect ('base:leaves')
+
+@login_required(login_url='/auth/signin')
+def delete_archive_leave(request, id):
+    archive_leave = get_object_or_404(models.ArchivedLeave, id=id)
+    archive_leave.delete()
+    return redirect ('base:archive_leaves')
+    
 @login_required(login_url='/auth/signin')
 def leaves_view(request):
     profilepic = get_object_or_404(models.ProfilePic, user=request.user)
@@ -99,7 +123,46 @@ def leaves_view(request):
     }
     return render(request,'leaves/leaves.html',context)
 
-def delete_leave(request, id):
+@login_required(login_url='/auth/signin')
+def archive_leaves_view(request):
+    profilepic = get_object_or_404(models.ProfilePic, user=request.user)
+    archived_leaves = models.ArchivedLeave.objects.order_by('-id')
+    return render(request, 'leaves/archive_leaves.html', {
+        'archived_leaves':archived_leaves,
+        'profilepic':profilepic
+        })
+
+@login_required(login_url='/auth/signin')
+def manager_leaves_detail(request, id):
+    """ Leave detail review for managers or supervisors"""
+    available_leave_days = 0
     leave = get_object_or_404(models.Leave, id=id)
-    leave.delete()
-    return redirect ('base:leaves')
+    profile_pic = get_object_or_404(models.ProfilePic, user=leave.user)
+    profile = models.User.objects.filter(email=leave.user.email)
+    total_leave_days = models.Leave.objects.filter(user=leave.user).aggregate(Sum('days'))['days__sum']
+    annual_leave_limit = models.AnnualLimit.objects.values('annual_leave_limit').filter(user=leave.user)
+
+    waiting = models.Leave.objects.filter(user=leave.user, status='waiting').aggregate(Sum('days'))['days__sum']
+    approved = models.Leave.objects.filter(user=leave.user, status='approved').aggregate(Sum('days'))['days__sum']
+
+    for day in annual_leave_limit:
+        available_leave_limit = day['annual_leave_limit'] - total_leave_days
+    
+    context = {
+        'leave':leave,
+        'profile_pic':profile_pic,
+        'profile':profile,
+        'total_leave_days':total_leave_days,
+        'available_leave_limit':available_leave_limit,
+        'waiting':waiting,
+        'approved':approved,
+
+        }
+
+    return render(request, 'manager/manager_leave_detail.html', context)
+
+@login_required(login_url='/auth/signin')
+def manager_leaves_view(request):
+    """ All leaves and only visible to managers or supervisors"""
+    leaves = models.Leave.objects.order_by('-id')
+    return render(request, 'manager/manager_leaves.html', {'leaves':leaves})

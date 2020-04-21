@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div id="wrapper">
+    {% include 'leaves/sidebar.html' %}
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+            {% include 'leaves/topbar.html'%}
+            <div class="content">
+                <div class="animated fadeIn">
+                    <div class="orders">
+                            <div class="col-xl-12">
+                                    <h4 class="box-title my-4 color-black">Leaves Archive</h4>
+                                        <div class="table-stats order-table ov-h">
+                                            <table class="table seperate">
+                                                <thead >
+                                                    <tr>
+                                                        <th class="color-black">Leave Type</th>
+                                                        <th class="color-black">Date</th>
+                                                        <th class="color-black">Time</th>
+                                                        <th class="color-black">Status</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr id="new-attend" class="card-row">
+                                                           
+                                                      </tr>
+                                                    
+                                                    {% for al in archived_leaves %}
+                                                    <tr class="card-row">
+                                                            <td>  <span class="name">{{al.leave_type}}</span> </td>
+                                                            <td> <span class="product">{{al.leave_start_date|date:"Y-m-d"}} - {{al.leave_end_date|date:"Y-m-d"}}</span> </td>
+                                                            <td><span>{{al.leave_start_time|time:"H:i A"}} - {{al.leave_end_time|time:"H:i A"}}</span></td>
+                                                            <td>
+                                                                <span class="badge badge-waiting">{{al.status}}</span>
+                                                            </td>
+                                                            <td>
+                                                           <a class="btn btn-danger ml-2 btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" href="#"><i class="fas fa-trash"></i></a></td>
+                                                        </tr>
+                                                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                          <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to do this?</h5>
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                  <span aria-hidden="true">×</span>
+                                                                </button>
+                                                              </div>
+                                                              <div class="modal-body">This action is irreversible.</div>
+                                                              <div class="modal-footer">
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                                <a class="btn btn-danger" href="{% url 'base:delete_archive_leave' al.id %}">Delete</a>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            {% if not archived_leaves %}
+                                                <div class="alert text-center fade show" role="alert">
+                                                    No archived leaves yet.
+                                                  </div>
+                                            {% endif %}
+                                        </div> 
+                            </div> 
+                        </div>
+                    </div>
+    
+          </div>
+    </div>
+  </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+{% endblock %}

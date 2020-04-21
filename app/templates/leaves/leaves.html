@@ -142,7 +142,7 @@
                                                             <span class="badge badge-waiting">{{leave.status}}</span>
                                                         </td>
                                                         <td> 
-                                                          <!-- <a class="btn btn-info btn-circle btn-sm" href="#"><i class="fas fa-archive"></i></a> -->
+                                                          <a class="btn btn-info btn-circle btn-sm" href="{% url 'base:archive_leave' leave.id %}"><i class="fas fa-archive"></i></a>
                                                        <a class="btn btn-danger ml-2 btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal" href="#"><i class="fas fa-trash"></i></a></td>
                                                     </tr>
                                                     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -186,10 +186,10 @@
                         </div>  <!-- /.col-lg-8 -->
 
                     </div>
-                    {% if attendances.has_other_pages %}
+                    {% if leaves.has_other_pages %}
             <ul class="pagination">
-              {% for i in attendances.paginator.page_range %}
-                {% if attendances.number == i %}
+              {% for i in leaves.paginator.page_range %}
+                {% if leaves.number == i %}
                   <li class="active page-link active-pg-btn"><span>{{ i }} <span class="sr-only" >(current)</span></span></li>
                 {% else %}
                   <li><a class="btn page-button" href="?page={{ i }}">{{ i }}</a></li>
@@ -201,25 +201,9 @@
                 </div>
 
       </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; EAM 2020 by Rashid Maharramli</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
-
     </div>
-    <!-- End of Content Wrapper -->
 
   </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>

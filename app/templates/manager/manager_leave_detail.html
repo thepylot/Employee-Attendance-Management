@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div id="wrapper">
+    {% include 'leaves/sidebar.html' %}
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+            {% include 'leaves/topbar.html'%}
+            <div class="content">
+                <div class="animated fadeIn">
+                    <div class="row">
+                            
+                <div class="col-lg-8">
+                    <div class="card shadow mb-4">
+                      <!-- Card Header - Dropdown -->
+                      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Leave Deatils</h6>
+                        
+                      </div>
+                      <!-- Card Body -->
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-sm-8 py-4">
+                            <ul class="list-unstyled font-small mb-0 leave-details-list">
+                                <li>
+                                <p class="text-uppercase mb-2"><strong>Employee</strong></p>
+                                <p class="text-muted mb-4">{{leave.user.name}}</p>
+                                </li>
+    
+                                <li>
+                                    <p class="text-uppercase mb-2"><strong>Leave Type</strong></p>
+                                    <p class="text-muted mb-4">{{leave.leave_type}}</p>
+                                </li>
+    
+                                <li>
+                                <p class="text-uppercase mb-2"><strong>Leave Dates</strong></p>
+                                <p class="text-muted mb-4">{{leave.leave_start_date}}-{{leave.leave_end_date}}</p>
+                                </li>
+    
+                                <li>
+                                <p class="text-uppercase mb-2"><strong>Leave Time</strong></p>
+                                <p class="text-muted mb-4">{{leave.leave_start_time}}-{{leave.leave_end_time}}</p>
+                                </li>
+    
+                                <li>
+                                <p class="text-uppercase mb-2"><strong>Status</strong></p>
+                                <p class="text-muted mb-4">{{leave.status}}</p>
+                                </li>
+    
+                                <li>
+                                    <p class="text-uppercase mb-2"><strong>Reason</strong></p>
+                                    <p class="text-muted mb-4">{{leave.leave_reason}}</p>
+                                </li>
+    
+                                
+                            </ul>
+                            </div>
+                                <div class="col-sm-4">
+                                  <div class="chart-pie mr-3 py-2">
+                                    <canvas id="myPieChart"></canvas>
+                                  </div>
+                                  <div class="mt-4 text-center small">
+                                    <span class="mr-2">
+                                      <i class="fas fa-circle indicator-available"></i> Availabe
+                                    </span>
+                                    <span class="mr-2">
+                                      <i class="fas fa-circle indicator-approved"></i> Approved
+                                    </span>
+                                    <span class="mr-2">
+                                      <i class="fas fa-circle indicator-waiting"></i> Waiting
+                                    </span>
+                                  </div>
+                                </div>
+                                </div>
+                      </div>
+                    </div>
+                  </div>
+      
+                  <!-- Pie Chart -->
+                  <div class="col-lg-4">
+                    {{declined}}
+                  </div>
+                </div>
+                    </div>
+                </div>
+          </div>
+    </div>
+  </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <script src="{% static 'js/Chart.min.js' %}"></script>
+  <script>
+    // Set new default font family and font color to mimic Bootstrap's default styling
+Chart.defaults.global.defaultFontFamily = 'Segoe UI';
+Chart.defaults.global.defaultFontColor = '#858796';
+
+// Pie Chart Example
+var ctx = document.getElementById("myPieChart");
+var myPieChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ["Waiting","Approved","Available Leave Days"],
+    datasets: [{
+      data: ["{{waiting}}","{{approved}}","{{available_leave_limit}}"],
+      backgroundColor: ['#6e6967','#00c292','#FECA1B'],
+      hoverBackgroundColor: ['#6e6967','#00c292','#FECA1B'],
+      hoverBorderColor: "rgba(234, 236, 244, 1)",
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80,
+  },
+});
+
+</script>
+{% endblock %}

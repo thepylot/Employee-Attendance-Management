@@ -2646,6 +2646,9 @@ footer.site-footer {
 
      font-size: 13px;
    }
+   .navbar {
+    height: 7vh;
+}
   
   
 }
@@ -2676,6 +2679,9 @@ footer.site-footer {
 
      font-size: 13px;
    }
+   .navbar {
+    height: 7vh;
+}
   
   
 }
@@ -2717,5 +2723,19 @@ footer.site-footer {
 
    font-size: 13px;
  }
+ .navbar {
+  height: 7vh;
+}
 }
 
+.indicator-waiting{
+  color:#6e6967;
+}
+
+.indicator-approved{
+  color:#00c292;
+}
+
+.indicator-available{
+  color:#FECA1B;
+}

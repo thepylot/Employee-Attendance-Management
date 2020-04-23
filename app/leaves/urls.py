@@ -14,5 +14,6 @@ urlpatterns = [
     
     # Manager Access
     path('manage-leaves/', views.manager_leaves_view, name='manager_leaves'),
+    path('leaves-bar-chart/', views.total_leaves_monthly_bar_chart, name='leaves_bar_chart'),
     path('<int:id>/leave-detail/',views.manager_leaves_detail, name='leave_detail'),
 ]

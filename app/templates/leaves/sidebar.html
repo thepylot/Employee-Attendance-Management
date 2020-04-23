@@ -14,9 +14,9 @@
     </li>
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
-      Interface
+      Modules
     </div>
-    <li class="nav-item {% url 'base:leaves' as leaves %} {% if request.path == leaves %} active {% endif %}">
+    <li class="nav-item {% url 'base:leaves' as leaves %} {% url 'base:archive_leaves' as archive_leaves %} {% if request.path == leaves or request.path == archive_leaves %} active {% endif %}">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-calendar-check"></i>
         <span>Leaves</span>
@@ -24,8 +24,8 @@
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Leaves</h6>
-          <a class="collapse-item" href="{% url 'base:leaves' %}">Leaves Dashboard</a>
-          <a class="collapse-item" href="{% url 'base:archive_leaves'%}">Archive</a>
+          <a class="collapse-item {% url 'base:leaves' as leaves %} {% if request.path == leaves %} active {% endif %}" href="{% url 'base:leaves' %}">Leaves Dashboard</a>
+          <a class="collapse-item {% url 'base:archive_leaves' as archive_leaves %} {% if request.path == archive_leaves %} active {% endif %}" href="{% url 'base:archive_leaves'%}">Archive</a>
         </div>
       </div>
     </li>
@@ -45,8 +45,11 @@
           <a class="collapse-item" href="#">Staff Section</a>
       </div>
     </li>
+    <div class="sidebar-heading">
+      Manager
+    </div>
     {% if request.user.is_staff %}
-    <li class="nav-item">
+    <li class="nav-item {% url 'base:manager_leaves' as manager_leaves %} {% if request.path == manager_leaves %} active {% endif %}">
       <a class="nav-link" href="{% url 'base:manager_leaves' %}">
         <i class="fas fa-table"></i>
         <span>Leave Manager</span></a>

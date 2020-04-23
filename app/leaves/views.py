@@ -1,7 +1,9 @@
 from datetime import date, datetime
+from django.db.models.functions import TruncMonth
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.db.models import Sum
 from django.contrib import messages
 from django.urls import reverse
@@ -165,4 +167,21 @@ def manager_leaves_detail(request, id):
 def manager_leaves_view(request):
     """ All leaves and only visible to managers or supervisors"""
     leaves = models.Leave.objects.order_by('-id')
-    return render(request, 'manager/manager_leaves.html', {'leaves':leaves})
+    return render(request, 'manager/manager_leaves.html', {
+        'leaves':leaves,
+        })
+
+def total_leaves_monthly_bar_chart(request):
+    """ Bar chart for leave requests monthly"""
+    months = []
+    leaves_monthly = []
+    monthly_total_leave_days = models.Leave.objects.annotate(month=TruncMonth('leave_start_date')).values('month').annotate(leaves_monthly=Sum('days')).order_by('month')
+    for item in monthly_total_leave_days:
+        months.append(item['month'].strftime('%B'))
+        leaves_monthly.append(item['leaves_monthly'])
+
+
+    return JsonResponse(data={
+    'months': months,
+    'leaves_monthly':leaves_monthly,
+    })

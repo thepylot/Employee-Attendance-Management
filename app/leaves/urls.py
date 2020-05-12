@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from . import views
+from . import views, leave_manager_views
 
 urlpatterns = [
     # User Access
@@ -13,7 +13,7 @@ urlpatterns = [
     path('<int:id>/delete-archive-leave', views.delete_archive_leave, name='delete_archive_leave'),
     
     # Manager Access
-    path('manage-leaves/', views.manager_leaves_view, name='manager_leaves'),
-    path('leaves-bar-chart/', views.total_leaves_monthly_bar_chart, name='leaves_bar_chart'),
-    path('<int:id>/leave-detail/',views.manager_leaves_detail, name='leave_detail'),
+    path('manage-leaves/', leave_manager_views.manager_leaves_view, name='manager_leaves'),
+    path('leaves-bar-chart/', leave_manager_views.total_leaves_monthly_bar_chart, name='leaves_bar_chart'),
+    path('<int:id>/leave-detail/',leave_manager_views.manager_leaves_detail, name='leave_detail'),
 ]

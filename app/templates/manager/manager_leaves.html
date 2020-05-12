@@ -9,14 +9,12 @@
             <div class="content">
                 <div class="animated fadeIn">
                     <div class="orders">
-                      <div class="col-md-8">
+                      <div class="col-md-12">
+                        <h4 class="box-title my-4 color-black">Total Monthly Leaves</h4>
                         <div class="card shadow mb-4">
-                          <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
-                          </div>
                           <div class="card-body">
                             <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                              <canvas id="myBarChart" style="display: block; width: 737px; height: 320px;" width="737" height="320" class="chartjs-render-monitor"></canvas>
+                              <canvas id="LeavesBarChart" style="display: block; width: 737px; height: 320px;" width="737" height="320" class="chartjs-render-monitor"></canvas>
                             </div>
                           </div>
                         </div>
@@ -62,6 +60,18 @@
                                                     No archived leaves yet.
                                                   </div>
                                             {% endif %}
+                                            {% if leaves.has_other_pages %}
+                                            <ul class="pagination">
+                                              {% for i in leaves.paginator.page_range %}
+                                                {% if leaves.number == i %}
+                                                  <li class="active page-link active-pg-btn"><span><a href="#">{{ i }}</a> <span class="sr-only" >(current)</span></span></li>
+                                                {% else %}
+                                                  <li><a class="btn page-button" href="?page={{ i }}">{{ i }}</a></li>
+                                                {% endif %}
+                                              {% endfor %}
+                                            
+                                            </ul>
+                                          {% endif %}
                                         </div> 
                             </div> 
                         </div>
@@ -79,7 +89,7 @@
 Chart.defaults.global.defaultFontFamily = 'Segoe UI';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-var ctx = document.getElementById("myBarChart");
+var ctx = document.getElementById("LeavesBarChart");
 $.ajax({
   url: "{% url 'base:leaves_bar_chart' %}",
   success: function (data) {

@@ -6,6 +6,20 @@
       <div id="content">
             {% include 'leaves/topbar.html'%}
         <div class="content">
+          {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                  {{message}}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              
+              {% endfor %}
+          </ul>
+          {% endif %}
+          <div id="form-error"></div>
             <div class="animated fadeIn">
                <div class="row">
                     <div class="col-lg-7">
@@ -71,7 +85,6 @@
                                                         <button type="submit" id="submit" class="send-button"></button>
                                                     </div>
                                                 </div>
-                                                <div id="form-error"></div>
                                               </form>
                                               
                                 </div>
@@ -169,24 +182,11 @@
                                             No any leaves yet.
                                           </div>
                                         {% endif %}
-                                        {% if messages %}
-                                        <ul class="messages">
-                                            {% for message in messages %}
-                                            <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
-                                                {{message}}
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                  <span aria-hidden="true">&times;</span>
-                                                </button>
-                                              </div>
-                                            
-                                            {% endfor %}
-                                        </ul>
-                                        {% endif %}
                                     </div> 
                         </div>  <!-- /.col-lg-8 -->
 
                     </div>
-                    {% if leaves.has_other_pages %}
+            {% if leaves.has_other_pages %}
             <ul class="pagination">
               {% for i in leaves.paginator.page_range %}
                 {% if leaves.number == i %}

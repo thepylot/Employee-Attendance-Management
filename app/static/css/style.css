@@ -325,7 +325,7 @@ Googel Fonts  */
       -webkit-transition: all 0.2s linear;
       transition: all 0.2s linear; }
       .tdl-holder label a:hover {
-        color: rgba(153, 171, 180, 0.8); }
+        color: rgba(255, 255, 255, 0.8); }
   .tdl-holder input[type="checkbox"] {
     cursor: pointer;
     opacity: 0;
@@ -381,7 +381,7 @@ p:focus {
 a, button {
   text-decoration: none;
   outline: none !important;
-  color: #878787;
+  color: #ffffff;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease; }
 
@@ -2368,8 +2368,14 @@ footer.site-footer {
   border-radius:8px;
   }
   .active-pg-btn{
-    background:#8958fb;
-    color:white;
+    background:#133084;
+    color:rgb(255, 255, 255);
+    border-radius:8px;
+    margin:8px;
+  }
+  .active-pg-btn:active{
+    background:#133084;
+    color:rgb(255, 255, 255);
     border-radius:8px;
     margin:8px;
   }
@@ -2739,3 +2745,14 @@ footer.site-footer {
 .indicator-available{
   color:#FECA1B;
 }
+
+.circle {
+	width: 170px;
+	height: 170px;
+	background: #132f81;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+

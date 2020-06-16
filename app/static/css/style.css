@@ -2756,3 +2756,6 @@ footer.site-footer {
   margin: 0 auto;
 }
 
+.small {
+  color: rgb(99, 99, 99);
+}

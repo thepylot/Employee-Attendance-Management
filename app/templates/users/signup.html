@@ -34,10 +34,9 @@
                   Sign Up
                 </button>
               </form>
-              <hr>
                 {% for field in form %}
                 {% for error in field.errors %}
-                <div class="alert alert-danger">
+                <div class="alert alert-danger mt-2">
                   {{ error }}
               </div>
                 {% endfor %}            

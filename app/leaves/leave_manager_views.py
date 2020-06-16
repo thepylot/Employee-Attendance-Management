@@ -44,7 +44,6 @@ def manager_leaves_view(request):
     """ All leaves and only visible to managers or supervisors"""
     leaves = models.Leave.objects.order_by('-id')
 
-    users = models.User.objects.all().order_by('-id')
     paginator = Paginator(leaves, 5)
     page = request.GET.get('page')
     if not page:
@@ -58,6 +57,7 @@ def manager_leaves_view(request):
     return render(request, 'manager/manager_leaves.html', {
         'leaves':leaves,
         })
+
 
 def total_leaves_monthly_bar_chart(request):
     """ Bar chart for leave requests monthly"""

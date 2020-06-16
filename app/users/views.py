@@ -15,7 +15,7 @@ def sign_up_view(request):
             login(request, authenticate(email=email, password=password))
             return redirect('base:leaves')
         else:
-            messages.warning(request, 'Please provide valid information.')
+            pass
     else:
         form = forms.SignUpForm()
 
